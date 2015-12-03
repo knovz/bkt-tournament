@@ -1,13 +1,25 @@
 Matches = new Mongo.Collection("matches");
 
 if (Meteor.isClient) {
-    
+
+    Template.registerHelper("isAdmin",
+        function () {
+            if (Meteor.user()) {
+                console.log("isAdminUser");
+                return (Meteor.user().username === "admin");
+            } else {
+                console.log("isAdminFalse");
+                return false;
+            }
+        }
+    );
+
     Template.body.helpers({
         matches: function () {
             return Matches.find({}, {sort: {date: 1, time: 1}});
         }
     });
-    
+
     Template.body.events({
         "submit .new-match": function (event) {
             event.preventDefault();
@@ -17,7 +29,7 @@ if (Meteor.isClient) {
             var team1 = (event.target.team1.value.length === 0) ? "team 1" : event.target.team1.value;
             var team2 = (event.target.team2.value.length === 0) ? "team 2" : event.target.team2.value;
             var category = (event.target.category.value.length === 0) ? "no category" : event.target.category.value;
-            
+
             Matches.insert({
                 date: date,
                 time: time,
@@ -30,7 +42,7 @@ if (Meteor.isClient) {
             });
         }
     });
-    
+
     Template.match.events({
        "click .delete": function (event) {
             event.preventDefault();
@@ -44,6 +56,10 @@ if (Meteor.isClient) {
                 $set: {score1: score1, score2: score2}
             });
         }
+    });
+
+    Accounts.ui.config({
+        passwordSignupFields: "USERNAME_ONLY"
     });
 }
 

@@ -3,10 +3,8 @@
 </head>
 
 <body>
-    <h1>Taula</h1>
-    {{#each matches}}
-        {{> match}}
-    {{/each}}
+    {{> loginButtons}}
+    {{#if isAdmin}}
     <h1>Afegir</h1>
     <form class="new-match">
         <input type="text" name="date" placeholder="YYYY-MM-DD" />
@@ -17,13 +15,23 @@
         <input type="text" name="category" placeholder="cat" />
         <button>Afegir</button>
     </form>
+    {{/if}}
+    <h1>Taula</h1>
+    {{#each matches}}
+        {{> match}}
+    {{/each}}
 </body>
 
 <template name="match">
+    {{#if isAdmin}}
     <button class="delete">&times;</button>
+    {{/if}}
     <form class="matchdata">
-        {{date}}:{{time}}-{{pitch}} {{category}} {{team1}} vs {{team2}} <input type="text" name="score1" placeholder="-" value="{{score1}}" />|<input type="text" name="score2" placeholder="-" value="{{score2}}" /><br>
+        {{date}}:{{time}}-{{pitch}} {{category}} {{team1}} vs {{team2}} {{score1}}-{{score2}}
+        {{#if isAdmin}}
+        <input type="text" name="score1" placeholder="-" value="{{score1}}" /><input type="text" name="score2" placeholder="-" value="{{score2}}" /><br>
         <button class="update">+</button>
+        {{/if}}
     </form>
 </template>
 
