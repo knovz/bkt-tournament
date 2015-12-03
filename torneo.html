@@ -1,0 +1,17 @@
+<head>
+    <title>torneo</title>
+</head>
+
+<body>
+    <h1>Test</h1>
+    {{#each matches}}
+        {{> match}}
+    {{/each}}
+</body>
+
+<template name="match">
+    
+        {{date}}:{{time}}:{{pitch}} {{category}} {{team1}} vs {{team2}} {{score1}}-{{score2}}<br>
+
+</template>
+
