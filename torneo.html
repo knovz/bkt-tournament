@@ -3,15 +3,27 @@
 </head>
 
 <body>
-    <h1>Test</h1>
+    <h1>Taula</h1>
     {{#each matches}}
         {{> match}}
     {{/each}}
+    <h1>Afegir</h1>
+    <form class="new-match">
+        <input type="text" name="date" placeholder="YYYY-MM-DD" />
+        <input type="text" name="time" placeholder="HH:MM" />
+        <input type="text" name="pitch" placeholder="pitch" />
+        <input type="text" name="team1" placeholder="team 1" />
+        <input type="text" name="team2" placeholder="team 2" />
+        <input type="text" name="category" placeholder="cat" />
+        <button>Afegir</button>
+    </form>
 </body>
 
 <template name="match">
-    
-        {{date}}:{{time}}:{{pitch}} {{category}} {{team1}} vs {{team2}} {{score1}}-{{score2}}<br>
-
+    <button class="delete">&times;</button>
+    <form class="matchdata">
+        {{date}}:{{time}}-{{pitch}} {{category}} {{team1}} vs {{team2}} <input type="text" name="score1" placeholder="-" value="{{score1}}" />|<input type="text" name="score2" placeholder="-" value="{{score2}}" /><br>
+        <button class="update">+</button>
+    </form>
 </template>
 
