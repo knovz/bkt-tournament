@@ -4,34 +4,69 @@
 
 <body>
     {{> loginButtons}}
+    <h1>Partits</h1>
     {{#if isAdmin}}
-    <h1>Afegir</h1>
     <form class="new-match">
-        <input type="text" name="date" placeholder="YYYY-MM-DD" />
-        <input type="text" name="time" placeholder="HH:MM" />
-        <input type="text" name="pitch" placeholder="pitch" />
-        <input type="text" name="team1" placeholder="team 1" />
-        <input type="text" name="team2" placeholder="team 2" />
-        <input type="text" name="category" placeholder="cat" />
-        <button>Afegir</button>
+        <input type="text" name="pitch" placeholder="pitch" size="2" />
+        <input type="date" name="date" placeholder="YYYY-MM-DD" size="10" />
+        <input type="text" name="matchnum" placeholder="1" size="1" />
+        <input type="time" name="time" placeholder="HH:MM" size="6"/>
+        <input type="text" name="category" placeholder="cat" size="10" />
+        <input type="text" name="level" placeholder="A" size="1" />
+        <input type="text" name="team1" placeholder="team 1" size="10" />
+        <input type="text" name="team2" placeholder="team 2" size="10" />
+        <button>+</button>
     </form>
     {{/if}}
-    <h1>Taula</h1>
-    {{#each matches}}
+    <input type="text" id="filter-category" name="filter-category" placeholder="filter by category" size="10" value={{ selectedcategory }} />
+    <button id="clear-category">&times;</button>
+    <input type="text" id="filter-team" name="filter-team" placeholder="filter by team" size="10" value={{ selectedteam }} />
+    <button id="clear-team">&times;</button>
+    <table>
+        <tr>
+            {{#if isAdmin}}<td>&nbsp;</td>{{/if}}
+            <td>Pista</td>
+            <td>Data</td>
+            <td>Partit</td>
+            <td>Hora</td>
+            <td>Categoria</td>
+            <td>Nivell</td>
+            <td>Equip A</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>Equip B</td>
+            {{#if isAdmin}}<td>&nbsp;</td>{{/if}}
+        </tr>
+    {{#each matchesbycategory selectedteam selectedcategory }}
         {{> match}}
     {{/each}}
+    </table>
 </body>
 
 <template name="match">
-    {{#if isAdmin}}
-    <button class="delete">&times;</button>
-    {{/if}}
-    <form class="matchdata">
-        {{date}}:{{time}}-{{pitch}} {{category}} {{team1}} vs {{team2}} {{score1}}-{{score2}}
+    <tr>
         {{#if isAdmin}}
-        <input type="text" name="score1" placeholder="-" value="{{score1}}" /><input type="text" name="score2" placeholder="-" value="{{score2}}" /><br>
-        <button class="update">+</button>
+        <td><button class="delete">&times;</button></td>
         {{/if}}
-    </form>
+            <td>{{pitch}}</td>
+            <td>{{date}}</td>
+            <td>{{matchnum}}</td>
+            <td>{{time}}</td>
+            <td>{{category}}</td>
+            <td>{{level}}</td>
+            <td>{{team1}}</td>
+            <td>{{score1}}</td>
+            <td>{{score2}}</td>
+            <td>{{team2}}</td>
+            {{#if isAdmin}}
+            <td>
+                <form class="matchdata">
+                    <input type="text" name="score1" placeholder="-" value="{{score1}}" size="2" />
+                    <input type="text" name="score2" placeholder="-" value="{{score2}}" size="2" />
+                    <button class="update">&gt;</button>
+                </form>
+            </td>
+            {{/if}}
+    </tr>
 </template>
 
