@@ -14,6 +14,18 @@ if (Meteor.isClient) {
         }
     );
 
+    Template.registerHelper("isEditor",
+        function () {
+            if (Meteor.user()) {
+                // console.log("isAdminUser");
+                return (Meteor.user().username === "result" || Meteor.user().username === "admin");
+            } else {
+                // console.log("isAdminFalse");
+                return false;
+            }
+        }
+    );
+
     Template.body.helpers({
         matches: function () {
             return Matches.find({}, {sort: {date: 1, pitch:1, time: 1}});
@@ -38,6 +50,17 @@ if (Meteor.isClient) {
                 return Matches.find({$and: [ {category: catregexp} , {$or: [{team1: teamregexp}, {team2: teamregexp}]}]}, {sort: {date: 1, pitch:1, time: 1}});
             }
 
+            return Matches.find({}, {sort: {date: 1, pitch:1, time: 1}});
+        },
+        matchesfiltered: function (dateselected, pitchselected, teamselected, categoryselected) {
+            if(dateselected != null && pitchselected != null) {
+                if (categoryselected != null && teamselected != null) {
+                    catregexp = new RegExp("^" + categoryselected, "i");
+                    teamregexp = new RegExp("^" + teamselected, "i");
+                    return Matches.find({$and: [ {date: dateselected, pitch: pitchselected, category: catregexp} , {$or: [{team1: teamregexp}, {team2: teamregexp}]}]}, {sort: {time: 1}});
+                }
+                return Matches.find({date: dateselected, pitch: pitchselected}, {sort: {time: 1}});
+            }
             return Matches.find({}, {sort: {date: 1, pitch:1, time: 1}});
         },
         selectedteam: function () {
@@ -76,10 +99,16 @@ if (Meteor.isClient) {
         "change #filter-team" : function (event) {
             event.preventDefault();
             Session.set("selectedteam", event.target.value);
+            if (Session.get("selectedcategory") == null) {
+                Session.set("selectedcategory", "");
+            }
         },
         "keyup #filter-team" : function (event) {
             event.preventDefault();
             Session.set("selectedteam", event.target.value);
+            if (Session.get("selectedcategory") == null) {
+                Session.set("selectedcategory", "");
+            }
         },
         "click #clear-team" : function (event) {
             event.preventDefault();
@@ -89,10 +118,16 @@ if (Meteor.isClient) {
         "change #filter-category" : function (event) {
             event.preventDefault();
             Session.set("selectedcategory", event.target.value);
+            if (Session.get("selectedteam") == null) {
+                Session.set("selectedteam", "");
+            }
         },
         "keyup #filter-category" : function (event) {
             event.preventDefault();
             Session.set("selectedcategory", event.target.value);
+            if (Session.get("selectedteam") == null) {
+                Session.set("selectedteam", "");
+            }
         },
         "click #clear-category" : function (event) {
             event.preventDefault();
@@ -102,6 +137,21 @@ if (Meteor.isClient) {
     });
 
     Template.match.events({
+       "click .delete": function (event) {
+            event.preventDefault();
+            Matches.remove(this._id);
+        },
+        "submit .matchdata": function (event) {
+            event.preventDefault();
+            var score1 = event.target.score1.value;
+            var score2 = event.target.score2.value;
+            Matches.update(this._id, {
+                $set: {score1: score1, score2: score2}
+            });
+        }
+    });
+
+    Template.matchcompact.events({
        "click .delete": function (event) {
             event.preventDefault();
             Matches.remove(this._id);

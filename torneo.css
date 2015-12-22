@@ -1,1 +1,20 @@
 /* CSS declarations go here */
+.dia, .pista {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.dia {
+    background-color: #FFFFDD;
+}
+.pista {
+    background-color: #FFDDDD;
+}
+
+
+.score {
+    text-align: center;
+}
+.team1 {
+    text-align: right;
+}

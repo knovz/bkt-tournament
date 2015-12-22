@@ -1,46 +1,205 @@
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Torneig Reis CN Terrassa</title>
 </head>
 
 <body>
-    {{> loginButtons}}
-    <h1>Partits</h1>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <!-- <p class="navbar-brand">CN Terrassa Basquet</p> -->
+                <a class="navbar-brand" href="http://www.secciobasquetcnt.com"><img alt="CN Terrassa, seccio de basquet" src="img/logosmall.png"></a>
+                <!-- <p class="navbar-brand">Torneig de Reis</p> -->
+            </div>
+            <h1>16<sup>è</sup> Torneig&nbsp;de&nbsp;Reis <small>de&nbsp;Bàsquet&nbsp;de&nbsp;Base</small></h1>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-3">
+                <input type="text" id="filter-category" name="filter-category" placeholder="filtrar per categoria" size="20" value={{ selectedcategory }} />
+                <button id="clear-category">&times;</button>
+            </div>
+            <div class="col-sm-3">
+                <input type="text" id="filter-team" name="filter-team" placeholder="filtrar per equip" size="20" value={{ selectedteam }} />
+                <button id="clear-team">&times;</button>
+            </div>
+            <div class="col-sm-5">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">&nbsp;
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="dia">Dissabte 2 de Gener</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <h4 class="pista">Pista 1</h4>
+                <table class="table table-striped table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-1">&nbsp;</th>
+                            <th class="col-xs-1">Hora</th>
+                            <th class="col-xs-3">Categoria</th>
+                            <th class="col-xs-3 team1">Equip A</th>
+                            <th class="col-xs-1 score">&nbsp;&nbsp;</th>
+                            <th class="col-xs-3 team2">Equip B</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each matchesfiltered "2016-01-02" "1" selectedteam selectedcategory }}
+                            {{> matchcompact}}
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-6">
+                <h4 class="pista">Pista 2</h4>
+                <table class="table table-striped table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-1">&nbsp;</th>
+                            <th class="col-xs-1">Hora</th>
+                            <th class="col-xs-3">Categoria</th>
+                            <th class="col-xs-3 team1">Equip A</th>
+                            <th class="col-xs-1 score">&nbsp;&nbsp;</th>
+                            <th class="col-xs-3 team2">Equip B</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each matchesfiltered "2016-01-02" "2" selectedteam selectedcategory }}
+                            {{> matchcompact}}
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="dia">Diumenge 3 de Gener</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <h4 class="pista">Pista 1</h4>
+                <table class="table table-striped table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-1">&nbsp;</th>
+                            <th class="col-xs-1">Hora</th>
+                            <th class="col-xs-3">Categoria</th>
+                            <th class="col-xs-3 team1">Equip A</th>
+                            <th class="col-xs-1 score">&nbsp;&nbsp;</th>
+                            <th class="col-xs-3 team2">Equip B</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each matchesfiltered "2016-01-03" "1" selectedteam selectedcategory }}
+                            {{> matchcompact}}
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-6">
+                <h4 class="pista">Pista 2</h4>
+                <table class="table table-striped table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-1">&nbsp;</th>
+                            <th class="col-xs-1">Hora</th>
+                            <th class="col-xs-3">Categoria</th>
+                            <th class="col-xs-3 team1">Equip A</th>
+                            <th class="col-xs-1 score">&nbsp;&nbsp;</th>
+                            <th class="col-xs-3 team2">Equip B</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each matchesfiltered "2016-01-03" "2" selectedteam selectedcategory }}
+                            {{> matchcompact}}
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     {{#if isAdmin}}
-    <form class="new-match">
-        <input type="text" name="pitch" placeholder="pitch" size="2" />
-        <input type="date" name="date" placeholder="YYYY-MM-DD" size="10" />
-        <input type="text" name="matchnum" placeholder="1" size="1" />
-        <input type="time" name="time" placeholder="HH:MM" size="6"/>
-        <input type="text" name="category" placeholder="cat" size="10" />
-        <input type="text" name="level" placeholder="A" size="1" />
-        <input type="text" name="team1" placeholder="team 1" size="10" />
-        <input type="text" name="team2" placeholder="team 2" size="10" />
-        <button>+</button>
-    </form>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                &nbsp;
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-8">
+                {{#if isAdmin}}
+                <h3>Afegir partit</h3>
+                <form class="new-match">
+                    <input type="text" name="pitch" placeholder="pitch" size="2" />
+                    <input type="date" name="date" placeholder="YYYY-MM-DD" size="10" />
+                    <input type="text" name="matchnum" placeholder="1" size="1" />
+                    <input type="time" name="time" placeholder="HH:MM" size="6"/>
+                    <input type="text" name="category" placeholder="cat" size="10" />
+                    <input type="text" name="level" placeholder="A" size="1" />
+                    <input type="text" name="team1" placeholder="team 1" size="10" />
+                    <input type="text" name="team2" placeholder="team 2" size="10" />
+                    <button>+</button>
+                </form>
+                {{/if}}
+            </div>
+            <div class="col-lg-3">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">&nbsp;
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-8">
+                <h3>Llista complerta</h3>
+                <table class="table table-striped table-condensed table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>Pista</td>
+                        <td>Data</td>
+                        <td>Partit</td>
+                        <td>Hora</td>
+                        <td>Categoria</td>
+                        <td>Nivell</td>
+                        <td>Equip A</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>Equip B</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                {{#each matches }}
+                    {{> match}}
+                {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-3">
+            </div>
+        </div>
+    </div>
     {{/if}}
-    <input type="text" id="filter-category" name="filter-category" placeholder="filter by category" size="10" value={{ selectedcategory }} />
-    <button id="clear-category">&times;</button>
-    <input type="text" id="filter-team" name="filter-team" placeholder="filter by team" size="10" value={{ selectedteam }} />
-    <button id="clear-team">&times;</button>
-    <table>
-        <tr>
-            {{#if isAdmin}}<td>&nbsp;</td>{{/if}}
-            <td>Pista</td>
-            <td>Data</td>
-            <td>Partit</td>
-            <td>Hora</td>
-            <td>Categoria</td>
-            <td>Nivell</td>
-            <td>Equip A</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>Equip B</td>
-            {{#if isAdmin}}<td>&nbsp;</td>{{/if}}
-        </tr>
-    {{#each matchesbycategory selectedteam selectedcategory }}
-        {{> match}}
-    {{/each}}
-    </table>
+    <br><br>
+    <p class="text-right">{{> loginButtons align="right"}}&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    <br><br><br><br><br><br><br><br>
 </body>
 
 <template name="match">
@@ -67,6 +226,29 @@
                 </form>
             </td>
             {{/if}}
+    </tr>
+</template>
+
+<template name="matchcompact">
+    <tr>
+            <td>{{matchnum}}</td>
+            <td>{{time}}</td>
+            <td>{{category}}</td>
+            <td class="team1">{{team1}}</td>
+            <td class="score">
+                {{#if isEditor}}
+                <form class="matchdata">
+                    <input type="text" name="score1" placeholder="-" value="{{score1}}" size="2" />
+                    <input type="text" name="score2" placeholder="-" value="{{score2}}" size="2" />
+                    <button class="update">&gt;</button>
+                </form>
+                {{score1}}-{{score2}}
+                {{else}}
+                {{score1}}-{{score2}}
+                {{/if}}
+            </td>
+            <td class="team2">{{team2}}</td>
+
     </tr>
 </template>
 
